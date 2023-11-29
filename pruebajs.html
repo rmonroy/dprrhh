@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript</title>
+
+    <script type="text/javascript">
+        //nume=5;
+        //document.write(nume);
+        document.write('<br>');
+    </script>
+    <!-- script src="js/pruebas.js"></script -->
+    <style type="text/css">
+        .colorTexto{
+            border-style: solid;
+            float: left;
+            height: 50px;
+            margin: 10px;
+            width: 50px;
+        }
+    </style>
+
+</head>
+<body>
+    <div style="margin: 20px;">
+        <div class="colorTexto" id="celeste" style="background-color: lightblue;"></div>
+        <div class="colorTexto" id="ocre" style="background-color: darkred;"></div>
+        <div class="colorTexto" id="negro" style="background-color: black;"></div>
+        <div style="clear: both;"></div>
+        <div id="txParraf" style="width: 480px; border-style: solid; padding: 20px;">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum minima enim, 
+            iure architecto nisi minus voluptas esse excepturi quisquam officia. Voluptates 
+            repellat ad soluta quia, fugit quibusdam ducimus? Ullam, ut.
+        </div>
+    </div><br><br>
+
+    <div style="margin: 10px;">
+        <form>
+            <h2>Formulario con expresiones regulares</h2>
+            <hr>
+            <div>
+                <label> Texto: </label>
+                <input id="txCadena1" type="text" placeholder="Ej. Carro">
+            </div>
+            <div>
+                <label> Numero de teléfono</label>
+                <input type="tel" id="txTelefono" placeholder="Ej. 2222-2323">
+            </div>
+            <div>
+                <label> Fecha de nacimiento: </label>
+                <input type="date" id="fechaNc" >
+            </div>
+            <button type="submit" onclick="validarFecha();">Validar</button>
+            
+
+        </form>
+        <div>
+            <p id="pTelefono"></p>
+            <p id="pCadena"></p>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        //validar campos
+        function validarFecha(){
+            let fechaN=document.getElementById('fechaNc').value;
+            if(fechaN>="2005-10-10") { alert("Es menor de 18 años, no puede ingresar")}
+        }
+
+        //evento para div id="celeste"
+        document.getElementById('celeste').addEventListener('click', function(){
+           document.getElementById('txParraf').style.backgroundColor="lightblue";
+           document.getElementById('txParraf').style.color="darkred"; 
+        })
+
+        //evento para div id="ocre"
+        document.getElementById('ocre').addEventListener('mouseover', function(){
+            document.getElementById('txParraf').style.backgroundColor="darkred";
+            document.getElementById('txParraf').style.color="white";
+        });
+
+        //evento para div id="negro"
+        document.getElementById('negro').addEventListener('click', function(){
+            document.getElementById('txParraf').style.backgroundColor="black";
+            document.getElementById('txParraf').style.color="#e5d34e";
+        })
+
+        //agregar un evento al comportaiento del puntero
+        document.getElementById('negro').addEventListener('mouseover', function(){
+            document.body.style.cursor='pointer';
+        })
+        //agregar un evento al comportaiento del puntero
+        document.getElementById('negro').addEventListener('mouseout', function(){
+            document.body.style.cursor='auto';
+        })
+
+        function validarReg(){
+            let txTel=document.getElementById('txTelefono').value;
+            let txCad1=document.getElementById('txCadena1').value;
+            let pCade1=/[^0-9]/; //exp. regular que no tenga numeros
+            let pNum1=/^[6|7][0-9]{1,7}/;
+
+            (pCade1.test(txCad1)) ? 
+            document.getElementById('pCadena').innerHTML="Esta texto no contiene numeros" : 
+            document.getElementById('pCadena').innerHTML="Este texto contiene numeros";
+
+            (pNum1.test(txTel)) ? 
+            document.getElementById('pTelefono').innerHTML="numero de telefono valido" : 
+            document.getElementById('pTelefono').innerHTML="no cumple con el formato de numero telefonico";
+            
+        }
+    </script>
+</body>
+</html>

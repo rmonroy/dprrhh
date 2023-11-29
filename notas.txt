@@ -1,0 +1,38 @@
+objetivo: sistema de RRHH para el registro de empleados y asignación laboral
+
+Analisis:
+    -¿qué entidades (unidades/deptos) 
+        existen en el modelo de negocios de la empresa?---->tabla de BD
+        tb_Areas---> id, nombre, descripcion, estado
+
+    ¿Qué informacion del empleado requiero?
+
+        tb_Empleado --> id, nombre1, nombre2, apellido1, apellido2, dui, n_isss, afp, n_afp, correo, telfijo, celu, fechaIngreso
+
+        tb_DetalEmpleado --> id, id_emp, madre, padre, conyuge, n_hijos
+
+    ¿Qué funciones realiza el empleado?
+
+        tb_funcionesEmp --> id, cargo, desc, tipoFunc, estado
+
+    ¿Quienes estan asignados a que funciones?
+        tb_asignacionPuestos --> idd, nombreasig, idEmp, idFunc, fecha, asigSalario, estado
+
+    ¿Cual es la asignacion laboral?
+        tb_asigCargoEmp --> id, id_funcEmp, id_Emp, fecha, estado
+
+1) registrar datos de empleado (.....empleados/crear.php)
+    - insert a tb_Empleado
+    - insert a tb_DetalEmpleado
+    - insert a tb_asigCargoEmp
+
+2) listar empleados (...empleados/lista.php)
+    - Mostrar los empleados de estado 1 en tb_Empleado
+    - mostrar filtros de busqueda en tb_Empleado
+    - opcion dinamica de editar en la misma tabla
+
+
+
+
+
+   
