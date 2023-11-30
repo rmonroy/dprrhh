@@ -12,7 +12,7 @@ al codigo abierto
 class Base{
     private static $host='http://localhost';
     private static $proy='dprrhh';
-    private static $port='8666';
+    private static $port='';
     private static $urlBase;
     private static $file='assets';
 
