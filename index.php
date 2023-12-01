@@ -1,6 +1,14 @@
 <?php
-
+session_start();
 require_once('conf/config.php');
+$nom="";
+
+if(!isset($_SESSION['UsNm'])) {
+    $urlDir = 'Location: ' . Base::url() . 'app/usuarios/login.php';
+    header($urlDir);
+} else {
+    $nom = $_SESSION['UsNm'];
+}
 
 require('app/template/header.php');
 
@@ -14,7 +22,7 @@ require('app/template/menu.php')
 <div class="row py-3">
     <div class="col-md-8">
         <div>
-            <h1>Pantalla inicial SYSRRHH</h1>
+            <h1><?php echo $nom; ?>,  Pantalla inicial SYSRRHH</h1>
         </div>
     </div>
     <div class="col-md-4">

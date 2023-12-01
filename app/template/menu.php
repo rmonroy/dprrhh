@@ -11,7 +11,7 @@
             </div>
             <div class="text-end">
                 <span>
-                    <a href="<?php Base::url(); ?>app/usuarios/login.php">LogOut</a>
+                    <a href="<?php Base::url(); ?>app/usuarios/logout.php">LogOut</a>
                 </span>
             </div>
         </nav>

@@ -17,17 +17,58 @@ class Database{
     }
 
     public static function userValidate($u, $p){
-        //contruir la consulta a la bd
-        
-        $state="";
-        if($u=="utec" && $p=="1234"){
-            $state=true;
-        } else {
-            $state=false;
-        }
+                
+        $state=0;
+        //usamos funcion para traer la lista de usuarios
+        $objusr = self::listarUsuarios();
+        //1 - usuario y passw correctos y es activo estado
+        //2 - usuario y passw correctos y es inactivo estado
+        //3 - usuario correctos y pssw incorrecto
+        //0 - usuario no existe
 
+        foreach ( $objusr as $datos) {
+            if($datos['usuario'] == $u) {
+                if($datos['clave'] == $p) {
+                    if($datos['estado'] == 1){
+                        $state=1;
+                        
+                    } else {
+                        $state=2;
+                        
+                    }
+
+                } else {
+                    $state=3;
+                }
+            }
+        }
         return $state;
     }
+
+    public static function getUser($u, $p){
+        $datos;
+        //crear consulta
+        $sql="SELECT * FROM `usuarios` WHERE `usuario`= :usr and `clave`=:psw";
+        //recibir conexion
+        $conexion = self::connectOn();
+        //preparar la consulta
+        $accion=$conexion->prepare($sql);
+        //asignar parametros individuales BindParam
+        $accion->bindParam(':usr', $u);
+        $accion->bindparam(':psw', $p);
+        //control de errores
+        try{
+            //ejecutar la consulta
+            $accion->execute();
+            //trasladar el resultado a una variable (coleccion/array)
+            $datos = $accion->fetchAll(PDO::FETCH_ASSOC);
+        } catch (exception $ex) {
+            $datos=1;
+        }
+        //retornando el resultado
+        return $datos;
+    }
+
 
     /*
     //$conn=prepare($sql);    $conn->prepare($sql)->execute($data)

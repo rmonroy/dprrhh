@@ -1,4 +1,7 @@
 <?php
+session_start();
+
+
 require_once('../../conf/config.php');
 require_once('../../conf/db.php');
 
@@ -40,22 +43,36 @@ require('../template/header.php');
                             <label for="Connect" class="form-check-label"> Mantenerme conectado</label>
                         </div>
                     </div>
-                        <?php
+                        <?php  
+
                           if(isset($_POST['bn-login'])){
 
                             $us = $_POST['txUser'];
                             $ps = $_POST['txPassword'];
 
                             //llamar un metodo que autentique mi usuario 
+                            $resp = Database::userValidate($us, $ps);
 
-                            if(Database::userValidate($us, $ps)){
+                            if($resp==1){ //1 - usuario y passw correctos y es activo estado
+                                //guardar en sesion
+                                $datoUs = Database::getUser($us, $ps);
+                                $_SESSION['UsNm'] = $datoUs['nombre'];
+                                $_SESSION['UsRol'] = $datoUs['rol'];
                                 //esto es de muestra
                                 header('location:../../index.php');
 
                                 //validar que el campo de texto no venga vacio
-                            } else {
+                            } elseif ($resp==2){ //2 - usuario y passw correctos y es inactivo estado
                                 echo '<div class="d-grid">';
-                                echo '<div class="alert alert-danger">usuario incorrecto</div>';
+                                echo '<div class="alert alert-danger">usuario inhabilitado, comuniquese con el área técnica</div>';
+                                echo '</div>';
+                            } elseif ($resp==3){ //3 - usuario correctos y pssw incorrecto
+                                echo '<div class="d-grid">';
+                                echo '<div class="alert alert-danger">usuario y contraseña no coinciden</div>';
+                                echo '</div>';
+                            }  else { //0 - usuario no existe
+                                echo '<div class="d-grid">';
+                                echo '<div class="alert alert-danger">usuario no existente</div>';
                                 echo '</div>';
                             }
 
