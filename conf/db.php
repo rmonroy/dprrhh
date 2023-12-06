@@ -18,9 +18,9 @@ class Database{
 
     public static function userValidate($u, $p){
                 
-        $state=0;
+        $states=0;
         //usamos funcion para traer la lista de usuarios
-        $objusr = self::listarUsuarios();
+        $objusr = self::getUser($u, $p);
         //1 - usuario y passw correctos y es activo estado
         //2 - usuario y passw correctos y es inactivo estado
         //3 - usuario correctos y pssw incorrecto
@@ -30,19 +30,19 @@ class Database{
             if($datos['usuario'] == $u) {
                 if($datos['clave'] == $p) {
                     if($datos['estado'] == 1){
-                        $state=1;
+                        $states=1;
                         
                     } else {
-                        $state=2;
+                        $states=2;
                         
                     }
 
                 } else {
-                    $state=3;
+                    $states=3;
                 }
             }
         }
-        return $state;
+        return $states;
     }
 
     public static function getUser($u, $p){
@@ -55,7 +55,7 @@ class Database{
         $accion=$conexion->prepare($sql);
         //asignar parametros individuales BindParam
         $accion->bindParam(':usr', $u);
-        $accion->bindparam(':psw', $p);
+        $accion->bindParam(':psw', $p);
         //control de errores
         try{
             //ejecutar la consulta
@@ -66,7 +66,8 @@ class Database{
             $datos=1;
         }
         //retornando el resultado
-        return $datos;
+        return $datos;      
+       
     }
 
 

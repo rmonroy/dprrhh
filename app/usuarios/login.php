@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 
 
 require_once('../../conf/config.php');
@@ -51,22 +51,27 @@ require('../template/header.php');
                             $ps = $_POST['txPassword'];
 
                             //llamar un metodo que autentique mi usuario 
-                            $resp = Database::userValidate($us, $ps);
+                            $resps="";
+                            $resps = Database::userValidate($us, $ps);
+                            session_start();
+                            
 
-                            if($resp==1){ //1 - usuario y passw correctos y es activo estado
+                            if($resps==1){ //1 - usuario y passw correctos y es activo estado
                                 //guardar en sesion
-                                $datoUs = Database::getUser($us, $ps);
-                                $_SESSION['UsNm'] = $datoUs['nombre'];
-                                $_SESSION['UsRol'] = $datoUs['rol'];
+                                $datoUs = Database::getUser($us, $ps);                           
+
+                                $_SESSION['UsNm'] = "usuario";
+                                echo $_SESSION['UsNm'];
+                                $_SESSION['UsRol'] = 1;
                                 //esto es de muestra
                                 header('location:../../index.php');
 
                                 //validar que el campo de texto no venga vacio
-                            } elseif ($resp==2){ //2 - usuario y passw correctos y es inactivo estado
+                            } elseif ($resps==2){ //2 - usuario y passw correctos y es inactivo estado
                                 echo '<div class="d-grid">';
                                 echo '<div class="alert alert-danger">usuario inhabilitado, comuniquese con el área técnica</div>';
                                 echo '</div>';
-                            } elseif ($resp==3){ //3 - usuario correctos y pssw incorrecto
+                            } elseif ($resps==3){ //3 - usuario correctos y pssw incorrecto
                                 echo '<div class="d-grid">';
                                 echo '<div class="alert alert-danger">usuario y contraseña no coinciden</div>';
                                 echo '</div>';

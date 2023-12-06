@@ -12,7 +12,7 @@ if(!isset($_SESSION['UsNm'])) {
 
 require('app/template/header.php');
 
-require('app/template/menu.php')
+require('app/template/menu.php');
 
 ?>
 

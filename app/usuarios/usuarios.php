@@ -2,6 +2,24 @@
 require_once('../../conf/config.php');
 require_once('../../conf/db.php');
 
+//validar sesion de servidor en esta pagina
+//acceder a las sesiones del servidor
+session_start();
+$nom="";
+//validar si no existe la sesion regresar a login
+if(!isset($_SESSION['UsNm'])) {
+    $urlDir = 'Location: ' . Base::url() . 'login.php';
+    header($urlDir);
+} else {
+    //validar si el rol no es 1 regresar a index
+    if($_SESSION['UsRol']!=1) {
+        $urlDir = 'Location: ../../index.php';
+        header($urlDir);
+    } else {
+        $nom = $_SESSION['UsNm'];
+    }
+}
+
 require('../template/header.php');
 require('../template/menu.php');
 ?>

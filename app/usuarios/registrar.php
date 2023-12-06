@@ -2,6 +2,21 @@
 require_once('../../conf/config.php');
 require_once('../../conf/db.php');
 
+session_start();
+$nom="";
+
+if(!isset($_SESSION['UsNm'])) {
+    $urlDir = 'Location: ' . Base::url() . 'login.php';
+    header($urlDir);
+} else {
+    if($_SESSION['UsRol']!=1) {
+        $urlDir = 'Location: ../../index.php';
+        header($urlDir);
+    } else {
+        $nom = $_SESSION['UsNm'];
+    }
+}
+
 require('../template/header.php');
 require('../template/menu.php');
 ?>
